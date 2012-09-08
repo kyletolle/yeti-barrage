@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @yeti.name %>
+</p>
+
+<p>
+  <b>Lat:</b>
+  <%= @yeti.lat %>
+</p>
+
+<p>
+  <b>Long:</b>
+  <%= @yeti.long %>
+</p>
+
+
+<%= link_to 'Edit', edit_yeti_path(@yeti) %> |
+<%= link_to 'Back', yetis_path %>

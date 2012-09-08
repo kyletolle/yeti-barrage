@@ -1,0 +1,27 @@
+<h1>Listing yetis</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Lat</th>
+    <th>Long</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @yetis.each do |yeti| %>
+  <tr>
+    <td><%= yeti.name %></td>
+    <td><%= yeti.lat %></td>
+    <td><%= yeti.long %></td>
+    <td><%= link_to 'Show', yeti %></td>
+    <td><%= link_to 'Edit', edit_yeti_path(yeti) %></td>
+    <td><%= link_to 'Destroy', yeti, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Yeti', new_yeti_path %>

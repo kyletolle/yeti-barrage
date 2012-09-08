@@ -1,0 +1,2 @@
+module YetisHelper
+end
