@@ -27,13 +27,12 @@
 
       for (i = 0; i < yetiList.length; i++) {
         var yeti = yetiList[i];
-        var yetiLatLong = new google.maps.LatLng(yeti.lat, yeti.long);
-        var marker = new google.maps.Marker({
-          position: yetiLatLong,
-          title: yeti.name
-        });
 
+        var marker = createMarker(yeti);
         marker.setMap(map);
+
+        var infoWindow = createInfoWindow(yeti);
+        attachInfoWindowToMarker(marker, infoWindow);
       }
     }
 
@@ -45,6 +44,31 @@
       xmlHttp.send(null);
 
       return xmlHttp.responseText;
+    }
+
+    function createMarker(yeti) {
+      var yetiLatLong = new google.maps.LatLng(yeti.lat, yeti.long);
+
+      return new google.maps.Marker({
+        position: yetiLatLong,
+        title: yeti.name
+      });
+    }
+
+    function createInfoWindow(yeti) {
+      var text = "<p><b>Yeti</b>: " + yeti.name + "<br />" +
+        "<b>Latitude</b>: " + yeti.lat + "<br />" +
+        "<b>Longitude</b>: " + yeti.long + "</p>";
+
+      return new google.maps.InfoWindow({
+        content: text
+      });
+    }
+
+    function attachInfoWindowToMarker(marker, infoWindow) {
+      google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.open(map, marker);
+      });
     }
   </script>
 </head>
