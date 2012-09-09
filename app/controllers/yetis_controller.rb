@@ -1,4 +1,15 @@
 class YetisController < ApplicationController
+  layout :resolve_layout
+
+  def resolve_layout
+    case action_name
+    when "map"
+      "map"
+    else
+      "application"
+    end
+  end
+
   # GET /yetis
   # GET /yetis.json
   def index
@@ -19,6 +30,13 @@ class YetisController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @yeti }
     end
+  end
+
+  # GET /yetis/map
+  def map
+    @yetis = Yeti.all
+
+    @google_maps_api_key = google_maps_api_key
   end
 
   # GET /yetis/new
@@ -80,4 +98,10 @@ class YetisController < ApplicationController
       format.json { head :no_content }
     end
   end
+  
+  private
+    def google_maps_api_key
+      file = File.open "app/assets/keys/google_maps_api.key"
+      return file.read.strip
+    end
 end

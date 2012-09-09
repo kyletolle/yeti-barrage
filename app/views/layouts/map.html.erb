@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YetiBarrage</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript"
+    src="http://maps.googleapis.com/maps/api/js?key=<%= @google_maps_api_key %>&sensor=true">
+  </script>
+  <script type="text/javascript">
+    function initialize() {
+      var mapOptions = {
+        center: new google.maps.LatLng(-34.397, 150.644),
+        zoom: 8,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(document.getElementById("map_canvas"),
+        mapOptions);
+    }
+  </script>
+</head>
+<body onload="initialize()">
+
+<%= yield %>
+
+  <div id="map_canvas" style="width:100%; height:100%"></div>
+
+</body>
+</html>

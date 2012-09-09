@@ -1,4 +1,5 @@
 YetiBarrage::Application.routes.draw do
+  match 'yetis/map' => 'yetis#map'
   resources :yetis
 
   # The priority is based upon order of creation:
