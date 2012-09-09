@@ -34,8 +34,6 @@ class YetisController < ApplicationController
 
   # GET /yetis/map
   def map
-    @yetis = Yeti.all
-
     @google_maps_api_key = google_maps_api_key
   end
 
