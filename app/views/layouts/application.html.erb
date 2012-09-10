@@ -5,8 +5,18 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+<% if action_name == "map" %>
+  <script type="text/javascript"
+    src="http://maps.googleapis.com/maps/api/js?key=<%= @google_maps_api_key %>&sensor=false"></script>
+</head>
+<body onload="initialize()">
+<% else %>
 </head>
 <body>
+<% end %>
+
+<h1>A Barrage of Yetis</h1>
+<%= render 'layouts/nav' %>
 
 <%= yield %>
 

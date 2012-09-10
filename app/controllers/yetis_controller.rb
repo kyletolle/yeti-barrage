@@ -1,15 +1,4 @@
 class YetisController < ApplicationController
-  layout :resolve_layout
-
-  def resolve_layout
-    case action_name
-    when "map"
-      "map"
-    else
-      "application"
-    end
-  end
-
   # GET /yetis
   # GET /yetis.json
   def index
