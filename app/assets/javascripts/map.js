@@ -40,7 +40,8 @@ function createMarker(yeti) {
 
   return new google.maps.Marker({
     position: yetiLatLong,
-    title: yeti.name
+    title: yeti.name,
+    icon: "http://www.pixeljoint.com/files/icons/funky_yeti_by_thetaupe.gif"
   });
 }
 
