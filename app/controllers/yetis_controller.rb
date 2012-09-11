@@ -88,7 +88,6 @@ class YetisController < ApplicationController
   
   private
     def google_maps_api_key
-      file = File.open "app/assets/keys/google_maps_api.key"
-      return file.read.strip
+      return ENV["google_maps_api_key"].strip
     end
 end
