@@ -8,6 +8,8 @@ function initialize() {
     mapOptions);
 
   mapYetis(map);
+
+  attachListeners(map);
 }
 
 function mapYetis(map) {
@@ -58,4 +60,39 @@ function attachInfoWindowToMarker(map, marker, infoWindow) {
   google.maps.event.addListener(marker, 'click', function() {
     infoWindow.open(map, marker);
   });
+}
+
+function attachListeners(map) {
+  google.maps.event.addListener(map, 'rightclick', function(event) {
+    addYeti(event);
+  });
+}
+
+function addYeti(event) {
+  $('<div id="modal"></div>').appendTo('#map_canvas');
+  $('#modal').html(
+      getNewForm()
+  );
+  $('#modal').css({
+      position: 'fixed',
+      width: "50%",
+      height: "50%",
+      background: "white",
+      padding: '10px'
+  });
+  $('#modal').css({
+      top: (($(window).height() / 2) - ($('#modal').height() /2 )),
+      left: (($(window).width() / 2) - ($('#modal').width() / 2 )),
+      zIndex: "10"
+  });
+
+  function getNewForm() {
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "/yetis/new.json", false);
+    xmlHttp.send(null);
+
+    return JSON.parse(xmlHttp.responseText).html;
+  }
 }
