@@ -1,66 +1,100 @@
-function initialize() {
-  var mapOptions = {
-    center: new google.maps.LatLng(38.830, -104.820),
-    zoom: 12,
-    mapTypeId: google.maps.MapTypeId.TERRAIN
-  };
-  var map = new google.maps.Map(document.getElementById("map_canvas"),
-    mapOptions);
+// Map object
+map = 
+{
+  // The actual map object.
+  map : null,
 
-  mapYetis(map);
+  // Initialize the map.
+  initialize : function() {
+    var mapOptions = {
+      center: new google.maps.LatLng(38.830, -104.820),
+      zoom: 12,
+      mapTypeId: google.maps.MapTypeId.TERRAIN
+    };
 
-  attachListeners(map);
-}
+    this.map = new google.maps.Map(document.getElementById("map_canvas"),
+      mapOptions);
 
-function mapYetis(map) {
-  var yetiList = JSON.parse(getYetis());
+    this.showYetis();
 
-  for (i = 0; i < yetiList.length; i++) {
-    var yeti = yetiList[i];
+    attachListeners(this.map);
+  },
 
-    var marker = placeMarker(map, yeti);
+  // Show the yetis on the map.
+  showYetis : function() {
+    var yetiList = yetis.list;
 
-    var infoWindow = createInfoWindow(map, yeti);
-    attachInfoWindowToMarker(map, marker, infoWindow);
+    for (i = 0; i < yetiList.length; i++) {
+      var data = yetiList[i];
+
+      yeti.show(this.map, data);
+    }
   }
 }
 
-function getYetis() {
-  var xmlHttp = null;
+// Yetis closure
+{
+  //
+  // Private methods for the yetis object.
+  //
 
-  xmlHttp = new XMLHttpRequest();
-  xmlHttp.open("GET", "/yetis.json", false);
-  xmlHttp.send(null);
+  var retrieveFromServer = function() {
+    return JSON.parse(get());
+  }
 
-  return xmlHttp.responseText;
+  var get = function() {
+    var xmlHttp = null;
+
+    xmlHttp = new XMLHttpRequest();
+    xmlHttp.open("GET", "/yetis.json", false);
+    xmlHttp.send(null);
+
+    return xmlHttp.responseText;
+  }
+
+  yetis = {
+    list : retrieveFromServer()
+  };
 }
 
-function placeMarker(map, yeti) {
-  var yetiLatLong = new google.maps.LatLng(yeti.lat, yeti.long);
+// Yeti closure
+{
+  var placeMarker = function (map, data) {
+    var yetiLatLong = new google.maps.LatLng(data.lat, data.long);
 
-  return new google.maps.Marker({
-    position: yetiLatLong,
-    title: yeti.name,
-    map: map,
-    icon: "http://www.pixeljoint.com/files/icons/funky_yeti_by_thetaupe.gif"
-  });
+    return new google.maps.Marker({
+      position: yetiLatLong,
+      title: data.name,
+      map: map,
+      icon: "http://www.pixeljoint.com/files/icons/funky_yeti_by_thetaupe.gif"
+    });
+  }
+
+  var createInfoWindow = function(map, data) {
+    var text = "<p><b>Yeti</b>: " + data.name + "<br />" +
+      "<b>Latitude</b>: " + data.lat + "<br />" +
+      "<b>Longitude</b>: " + data.long + "</p>";
+
+    return new google.maps.InfoWindow({
+      content: text
+    });
+  }
+
+  var attachInfoWindowToMarker = function(map, marker, infoWindow) {
+    google.maps.event.addListener(marker, 'click', function() {
+      infoWindow.open(map, marker);
+    });
+  }
+
+  yeti = {
+    show : function(map, data) {
+      var marker = placeMarker(map, data);
+      var infoWindow = createInfoWindow(map, data);
+      attachInfoWindowToMarker(map, marker, infoWindow);
+    }
+  }
 }
 
-function createInfoWindow(map, yeti) {
-  var text = "<p><b>Yeti</b>: " + yeti.name + "<br />" +
-    "<b>Latitude</b>: " + yeti.lat + "<br />" +
-    "<b>Longitude</b>: " + yeti.long + "</p>";
-
-  return new google.maps.InfoWindow({
-    content: text
-  });
-}
-
-function attachInfoWindowToMarker(map, marker, infoWindow) {
-  google.maps.event.addListener(marker, 'click', function() {
-    infoWindow.open(map, marker);
-  });
-}
 
 function attachListeners(map) {
   google.maps.event.addListener(map, 'rightclick', function(event) {

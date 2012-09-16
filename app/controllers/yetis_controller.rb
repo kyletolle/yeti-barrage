@@ -33,7 +33,7 @@ class YetisController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json
+      format.json # new.json.erb
       end
   end
 
