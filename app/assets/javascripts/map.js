@@ -1,11 +1,11 @@
 // Map object
-map = 
-{
+function Map() {
   // The actual map object.
-  map : null,
+  var map = null;
+  var yetis = [];
 
   // Initialize the map.
-  initialize : function() {
+  this.initialize = function() {
     var mapOptions = {
       center: new google.maps.LatLng(38.830, -104.820),
       zoom: 12,
@@ -18,115 +18,53 @@ map =
     this.showYetis();
 
     attachListeners(this.map);
-  },
+  };
 
   // Show the yetis on the map.
-  showYetis : function() {
-    var yetiList = yetis.list;
+  this.showYetis = function() {
+    var yetiData = new Yetis().list;
 
-    for (i = 0; i < yetiList.length; i++) {
-      var data = yetiList[i];
+    for (i = 0; i < yetiData.length; i++) {
+      var yeti = new Yeti(yetiData[i]);
+      yetis.push(yeti);
 
-      yeti.show(this.map, data);
+      yeti.show(this.map);
     }
-  }
-}
+  };
 
-// Yetis closure
-{
-  //
-  // Private methods for the yetis object.
-  //
+  function attachListeners(map) {
+    google.maps.event.addListener(map, 'rightclick', function(event) {
+      addYeti(event);
+    });
+  };
 
-  var retrieveFromServer = function() {
-    return JSON.parse(get());
-  }
+  function addYeti(event) {
+    $('<div id="modal"></div>').appendTo('#map_canvas');
+    $('#modal').html(
+        getNewForm()
+    );
+    $('#modal').css({
+        position: 'fixed',
+        width: "50%",
+        height: "50%",
+        background: "white",
+        padding: '10px'
+    });
+    $('#modal').css({
+        top: (($(window).height() / 2) - ($('#modal').height() /2 )),
+        left: (($(window).width() / 2) - ($('#modal').width() / 2 )),
+        zIndex: "10"
+    });
 
-  var get = function() {
-    var xmlHttp = null;
+    function getNewForm() {
+      var xmlHttp = null;
 
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "/yetis.json", false);
-    xmlHttp.send(null);
+      xmlHttp = new XMLHttpRequest();
+      xmlHttp.open("GET", "/yetis/new.json", false);
+      xmlHttp.send(null);
 
-    return xmlHttp.responseText;
-  }
-
-  yetis = {
-    list : retrieveFromServer()
+      return JSON.parse(xmlHttp.responseText).html;
+    }
   };
 }
 
-// Yeti closure
-{
-  var placeMarker = function (map, data) {
-    var yetiLatLong = new google.maps.LatLng(data.lat, data.long);
-
-    return new google.maps.Marker({
-      position: yetiLatLong,
-      title: data.name,
-      map: map,
-      icon: "http://www.pixeljoint.com/files/icons/funky_yeti_by_thetaupe.gif"
-    });
-  }
-
-  var createInfoWindow = function(map, data) {
-    var text = "<p><b>Yeti</b>: " + data.name + "<br />" +
-      "<b>Latitude</b>: " + data.lat + "<br />" +
-      "<b>Longitude</b>: " + data.long + "</p>";
-
-    return new google.maps.InfoWindow({
-      content: text
-    });
-  }
-
-  var attachInfoWindowToMarker = function(map, marker, infoWindow) {
-    google.maps.event.addListener(marker, 'click', function() {
-      infoWindow.open(map, marker);
-    });
-  }
-
-  yeti = {
-    show : function(map, data) {
-      var marker = placeMarker(map, data);
-      var infoWindow = createInfoWindow(map, data);
-      attachInfoWindowToMarker(map, marker, infoWindow);
-    }
-  }
-}
-
-
-function attachListeners(map) {
-  google.maps.event.addListener(map, 'rightclick', function(event) {
-    addYeti(event);
-  });
-}
-
-function addYeti(event) {
-  $('<div id="modal"></div>').appendTo('#map_canvas');
-  $('#modal').html(
-      getNewForm()
-  );
-  $('#modal').css({
-      position: 'fixed',
-      width: "50%",
-      height: "50%",
-      background: "white",
-      padding: '10px'
-  });
-  $('#modal').css({
-      top: (($(window).height() / 2) - ($('#modal').height() /2 )),
-      left: (($(window).width() / 2) - ($('#modal').width() / 2 )),
-      zIndex: "10"
-  });
-
-  function getNewForm() {
-    var xmlHttp = null;
-
-    xmlHttp = new XMLHttpRequest();
-    xmlHttp.open("GET", "/yetis/new.json", false);
-    xmlHttp.send(null);
-
-    return JSON.parse(xmlHttp.responseText).html;
-  }
-}

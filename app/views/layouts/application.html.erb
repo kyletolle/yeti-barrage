@@ -9,7 +9,7 @@
   <script type="text/javascript"
     src="http://maps.googleapis.com/maps/api/js?key=<%= @google_maps_api_key %>&sensor=false"></script>
 </head>
-<body onload="map.initialize()">
+<body onload="map = new Map();map.initialize()">
 <% else %>
 </head>
 <body>
