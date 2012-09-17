@@ -39,22 +39,67 @@ function Map() {
   };
 
   function addYeti(event) {
-    $('<div id="modal"></div>').appendTo('#map_canvas');
-    $('#modal').html(
-        getNewForm()
-    );
-    $('#modal').css({
+    createModalBkg();
+    createModal();
+    setForm();
+    addCancelButton();
+
+    function createModalBkg() {
+      $('<div id="modalBkg"><p>Test</p></div>').prependTo('body');
+      $('#modalBkg').css({
+        top: "0px",
+        left: "0px",
         position: 'fixed',
-        width: "50%",
-        height: "50%",
-        background: "white",
-        padding: '10px'
-    });
-    $('#modal').css({
-        top: (($(window).height() / 2) - ($('#modal').height() /2 )),
-        left: (($(window).width() / 2) - ($('#modal').width() / 2 )),
+        width: "100%",
+        height: "100%",
+        background: "#333333",
+          opacity: 0.8,
         zIndex: "10"
-    });
+      });
+    };
+
+    function createModal() {
+      $('<div id="modal"></div>').insertAfter('#map_canvas');
+      $('#modal').html(
+          getNewForm()
+      );
+      $('#modal').css({
+          position: 'fixed',
+          width: "50%",
+          height: "50%",
+          background: "white",
+          padding: '10px'
+      });
+      $('#modal').css({
+          top: (($(window).height() / 2) - ($('#modal').height() /2 )),
+          left: (($(window).width() / 2) - ($('#modal').width() / 2 )),
+          zIndex: "100"
+      });
+    };
+
+    function setForm() {
+      $('#yeti_lat').val(event.latLng.Xa);
+      $('#yeti_long').val(event.latLng.Ya);
+      $('#yeti_name').focus();
+    };
+
+    function addCancelButton() {
+      $('<button id="cancel">Cancel</button>').appendTo('div.actions');
+      $('#cancel').click(function() {
+        clearModal();
+        return false;
+      });
+
+      // Listen for the escape key to clear the modal dialog.
+      $(document).keyup(function(e) {
+        if (e.keyCode == 27) { clearModal(); }
+      });
+
+      function clearModal() {
+        $('#modal').remove();
+        $('#modalBkg').remove();
+      }
+    }
 
     function getNewForm() {
       var xmlHttp = null;
