@@ -14,7 +14,7 @@
   <tbody>
 <% @yetis.each do |yeti| %>
     <tr>
-      <td><%= link_to yeti.name, yeti %></td>
+      <td><%= yeti.name %></td>
       <td><%= yeti.lat %></td>
       <td><%= yeti.long %></td>
       <td><%= link_to 'Edit', edit_yeti_path(yeti), class: "btn btn-success" %></td>

@@ -10,17 +10,6 @@ class YetisController < ApplicationController
     end
   end
 
-  # GET /yetis/1
-  # GET /yetis/1.json
-  def show
-    @yeti = Yeti.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @yeti }
-    end
-  end
-
   # GET /yetis/map
   def map
     @google_maps_api_key = google_maps_api_key
