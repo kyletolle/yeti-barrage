@@ -1,27 +1,29 @@
-<h3>A List</h3>
+<h4>A List</h4>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Lat</th>
-    <th>Long</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Lat</th>
+      <th>Long</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
 
+  <tbody>
 <% @yetis.each do |yeti| %>
-  <tr>
-    <td><%= yeti.name %></td>
-    <td><%= yeti.lat %></td>
-    <td><%= yeti.long %></td>
-    <td><%= link_to 'Show', yeti %></td>
-    <td><%= link_to 'Edit', edit_yeti_path(yeti) %></td>
-    <td><%= link_to 'Destroy', yeti, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+    <tr>
+      <td><%= link_to yeti.name, yeti %></td>
+      <td><%= yeti.lat %></td>
+      <td><%= yeti.long %></td>
+      <td><%= link_to 'Edit', edit_yeti_path(yeti), class: "btn btn-success" %></td>
+      <td><%= link_to 'Destroy', yeti, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+    </tr>
 <% end %>
+  </tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Yeti', new_yeti_path %>
+<%= link_to 'New Yeti', new_yeti_path, class: "btn btn-primary" %>
