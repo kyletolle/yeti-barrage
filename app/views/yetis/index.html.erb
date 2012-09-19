@@ -18,7 +18,7 @@
       <td><%= yeti.lat %></td>
       <td><%= yeti.long %></td>
       <td><%= link_to 'Edit', edit_yeti_path(yeti), class: "btn btn-success" %></td>
-      <td><%= link_to 'Destroy', yeti, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %></td>
+      <td><%= link_to 'Destroy', yeti, method: :delete, class: "btn btn-danger" %></td>
     </tr>
 <% end %>
   </tbody>
