@@ -65,8 +65,6 @@ function Map() {
       );
       $('#modal').css({
           position: 'fixed',
-          width: "50%",
-          height: "50%",
           background: "white",
           padding: '10px'
       });
@@ -84,7 +82,7 @@ function Map() {
     };
 
     function addCancelButton() {
-      $('<button id="cancel">Cancel</button>').appendTo('div.actions');
+      $('<button id="cancel" class="btn">Cancel</button>').appendTo('div.actions');
       $('#cancel').click(function() {
         clearModal();
         return false;
