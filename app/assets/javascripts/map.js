@@ -42,6 +42,7 @@ function Map() {
     createModalBkg();
     createModal();
     setForm();
+    removeBackButton();
     addCancelButton();
 
     function createModalBkg() {
@@ -80,6 +81,10 @@ function Map() {
       $('#yeti_long').val(event.latLng.Ya);
       $('#yeti_name').focus();
     };
+
+    function removeBackButton() {
+      $('div.actions a.btn').remove();
+    }
 
     function addCancelButton() {
       $('<button id="cancel" class="btn">Cancel</button>').appendTo('div.actions');
