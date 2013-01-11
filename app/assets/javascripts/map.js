@@ -33,12 +33,12 @@ function Map() {
   };
 
   function attachListeners(map) {
-    google.maps.event.addListener(map, 'rightclick', function(event) {
-      addYeti(event);
+    google.maps.event.addListener(map, 'rightclick', function(e) {
+      addYeti(e);
     });
   };
 
-  function addYeti(event) {
+  function addYeti(e) {
     createModalBkg();
     createModal();
     setForm();
@@ -77,8 +77,8 @@ function Map() {
     };
 
     function setForm() {
-      $('#yeti_lat').val(event.latLng.Xa);
-      $('#yeti_long').val(event.latLng.Ya);
+      $('#yeti_lat').val(e.latLng.Ya);
+      $('#yeti_long').val(e.latLng.Za);
       $('#yeti_name').focus();
     };
 

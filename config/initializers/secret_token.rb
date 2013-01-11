@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-YetiBarrage::Application.config.secret_token = 'db34bc2d5e73803117e672be67a4b0d1e3dd479c3b4b777cf0aa2e8ecf62b84048cdd7d4a7e9552c733547d2feec51900d7c297a7f4431a4c55e300354f07e5a'
+YetiBarrage::Application.config.secret_token = '8e87a19136619012e39b65eff7ddd069a50de71169a45628090c77b3f91a1c91006940bdcaa4314e4f3852317965d47a19d62057490329e01cefff7183970a07'
