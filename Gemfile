@@ -1,18 +1,17 @@
 source 'https://rubygems.org'
+ruby '2.7.0'
 
-gem 'rails', '3.2.11'
-
-gem 'heroku'
+gem 'rails', '~> 3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development do
-  gem 'sqlite3'
+  gem 'sqlite3', '~> 1.3.6'
 end
 
 group :production do
-  gem 'pg'
+  gem 'pg', '~> 0.18'
 end
 
 # Gems used only for assets and not required

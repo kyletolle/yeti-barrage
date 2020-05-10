@@ -4,6 +4,10 @@ Yeti-Barrage is a web application used to track the locations of Yetis around th
 Use Yeti-Barrage to update others and stay up-to-date yourself of yeti movements globally.
 Some cities seem to be hit with a barrage of Yetis. Stay frosty.
 
+== Install
+
+> bundle _1.17.3_ install
+
 === Beware
 
 You might be afraid to leave your house after using this application.

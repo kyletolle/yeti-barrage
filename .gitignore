@@ -16,3 +16,4 @@
 
 /app/assets/keys/*.key
 .DS_Store
+tags
